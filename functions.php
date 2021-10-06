@@ -69,19 +69,13 @@ function saveEmpleadoAttendance($empleadoId)
     // Identificar si el empleado esta entrando o saliendo
     // si se devuelve par es SALIDA y si es impar sera ENTRADA.
     // DATE_FORMAT($fecha_actual, '%Y-%m-%d')
-    $sql_consulta = "SELECT count(*) FROM asistencia_empleados WHERE empleados_id = ? AND estado = 1;";// AND cast(fecha as date) = ?;";
-        // "BETWEEN '2021-08-24' AND '2021-08-25';";
-        // "= cast($fecha_actual as date)";
+    $sql_consulta = "SELECT count(*) FROM asistencia_empleados WHERE empleados_id = ? AND estado = 1 AND cast(fecha as date) = ?;";
 
     $statement = $db->prepare($sql_consulta);
-    // $statement->execute([$empleadoId, $fecha_actual]);
-    $statement->execute([$empleadoId]);
+    $statement->execute([$empleadoId, $fecha_actual]);
     $registros_devueltos = $statement->fetchColumn(0); // $statement->fetchObject();
 
-    // var_dump([$registros_devueltos, $fecha_actual, date_default_timezone_get()]);
-    // die();
-
-    if ( intval($registros_devueltos) %2 != 0 ){ // si es par
+    if ( intval($registros_devueltos) %2 != 0 ){ // si es impar
         $tipo_asistencia = 2; // PAR = SALIDA
     }else{
         $tipo_asistencia = 1; // IMPAR = ENTRADA
