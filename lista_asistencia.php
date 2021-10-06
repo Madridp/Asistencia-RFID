@@ -34,12 +34,24 @@ include_once "functions.php";
     <div class="col-12 form-inline mb-2">
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="">Fecha: &nbsp;</span>
+                <span class="input-group-text" id="">Fecha inicial: &nbsp;</span>
+                <input onchange="buscar_fecha($('#buscarFecha').val(), $('#buscarFechaFinal').val());" name="buscarFecha" id="buscarFecha" type="date" class="form-control">
             </div>
             <!--label for="fecha" class="form-label">Fecha: &nbsp;</label-->
             <!--input @change="refreshEmpleadosList" v-model="date" name="date" id="date" type="date" class="form-control">
             <button @click="save" class="btn btn-success ml-2">Consultar</button-->
-            <input onchange="buscar_fecha($('#buscarFecha').val());" name="buscarFecha" id="buscarFecha" type="date" class="form-control">
+            
+            <!-- <button class="btn btn-success ml-2">Consultar</button> -->
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Fecha final: &nbsp;</span>
+                <input onchange="buscar_fecha($('#buscarFecha').val(), $('#buscarFechaFinal').val());" name="buscarFechaFinal" id="buscarFechaFinal" type="date" class="form-control">
+            </div>
+            <!--label for="fecha" class="form-label">Fecha: &nbsp;</label-->
+            <!--input @change="refreshEmpleadosList" v-model="date" name="date" id="date" type="date" class="form-control">
+            <button @click="save" class="btn btn-success ml-2">Consultar</button-->
+            
             <!-- <button class="btn btn-success ml-2">Consultar</button> -->
         </div>
     </div>
@@ -217,11 +229,11 @@ include_once "functions.php";
 		    enlace_boton.href = "asistencia_eliminar.php?id=" + id_registro;
 	        }
         }
-        function buscar_fecha (buscarFecha){
-            
+
+        function buscar_fecha (fecha_inicial, fecha_final){
             let request = new XMLHttpRequest();
             request.addEventListener("load", requestPeticionBuscarAsistencia);
-            request.open("GET", "buscar_fecha.php?buscarFecha=" + buscarFecha);
+            request.open("GET", "buscar_fecha.php?fechaInicial=" + fecha_inicial + "&fechaFinal=" + fecha_final);
             request.send();
         }
 
